@@ -6,13 +6,15 @@
 
 AsyncWebServer server(80);
 
-void handleLed(const char *status) {
+void setLedState(const char *status) {
   pinMode(LED_PIN, OUTPUT);
+  
   if (strcmp(status, "on") == 0) {
     digitalWrite(LED_PIN, HIGH);
     Serial.print("LED [ON] 💡 \n");
     return;
   }
+
   digitalWrite(LED_PIN, LOW);
   Serial.print("LED [OFF] 💤  \n");
 }
@@ -51,7 +53,7 @@ void setup() {
         return;
       }
 
-      handleLed(status);
+      setLedState(status);
       request->send(200, "application/json", "{\"status\":\"ok\"}");
     });
   server.begin();
